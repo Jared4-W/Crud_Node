@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<title>Estados</title>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+<div class="container">
+
+<a class="navbar-brand me-4" href="/">
+Control Escolar
+</a>
+
+<div class="navbar-nav d-flex flex-row flex-wrap">
+
+<a class="nav-link me-3" href="/asignaturas">
+Asignaturas
+</a>
+
+<a class="nav-link me-3" href="/horarios">
+Horarios
+</a>
+
+<a class="nav-link me-3" href="/intendencia">
+Intendencia
+</a>
+
+<a class="nav-link active" href="/estados">
+Estados
+</a>
+
+<a class="nav-link me-3" href="/municipios">
+Municipios
+</a>
+
+<a class="nav-link me-3" href="/localidades">
+    Localidades
+</a>
+
+<a class="nav-link me-3" href="/generos">
+    Géneros
+</a>
+
+<a class="nav-link me-3" href="/datospersonales">Datos Personales</a>
+
+<a class="nav-link me-3" href="/tipopersonal">Tipo Personal</a>
+
+<a class="nav-link me-3" href="/personal">
+
+Personal
+
+</a>
+
+<a class="nav-link mb-3" href="/carreras">
+
+Carreras
+
+</a>
+
+<a class="nav-link me-3" href="/alumnos">
+
+Alumnos
+
+</a>
+
+<a class="nav-link me-3" href="/escuela">
+
+Escuela
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<div class="container mt-4">
+
+<a
+href="/estados/create"
+class="btn btn-success mb-3">
+
+Nuevo Estado
+
+</a>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped text-center">
+
+<thead class="table-primary">
+
+<tr>
+
+<th>ID</th>
+
+<th>Nombre</th>
+
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% results.forEach((estado)=>{ %>
+
+<tr>
+
+<td><%= estado.idEstado %></td>
+
+<td><%= estado.nombre %></td>
+
+<td>
+
+<a
+href="/estados/edit/<%= estado.idEstado %>"
+class="btn btn-warning">
+
+Editar
+
+</a>
+
+<a
+href="/estados/delete/<%= estado.idEstado %>"
+class="btn btn-danger">
+
+Eliminar
+
+</a>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+</body>
+</html>

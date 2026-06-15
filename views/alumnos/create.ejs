@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+Nuevo Alumno
+
+</div>
+
+<div class="card-body">
+
+<form action="/alumnos/save" method="POST">
+
+
+<input
+type="text"
+name="matricula"
+placeholder="Matrícula"
+class="form-control mb-3"
+required>
+
+
+<select
+name="idCarrera"
+class="form-select mb-3"
+required>
+
+<option value="">
+Seleccione ID Carrera
+</option>
+
+<% carreras.forEach((carrera)=>{ %>
+
+<option value="<%= carrera.idCarrera %>">
+
+<%= carrera.idCarrera %>
+
+</option>
+
+<% }) %>
+
+</select>
+
+
+<select
+name="idDatosP"
+class="form-select mb-3"
+required>
+
+<option value="">
+Seleccione ID Datos Personales
+</option>
+
+<% datos.forEach((dato)=>{ %>
+
+<option value="<%= dato.idDatosP %>">
+
+<%= dato.idDatosP %>
+
+</option>
+
+<% }) %>
+
+</select>
+
+
+<input
+type="text"
+name="status"
+placeholder="Status"
+class="form-control mb-3">
+
+
+<button class="btn btn-success">
+
+Guardar
+
+</button>
+
+<a href="/alumnos" class="btn btn-secondary">
+
+Cancelar
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

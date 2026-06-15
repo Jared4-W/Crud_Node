@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<title>Personal</title>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+<div class="container">
+
+<a class="navbar-brand" href="/">
+Control Escolar
+</a>
+
+<div class="navbar-nav d-flex flex-row flex-wrap">
+
+<a class="nav-link me-3" href="/asignaturas">
+Asignaturas
+</a>
+
+<a class="nav-link me-3" href="/horarios">
+Horarios
+</a>
+
+<a class="nav-link me-3" href="/intendencia">
+Intendencia
+</a>
+
+<a class="nav-link me-3" href="/estados">
+    Estados
+</a>
+
+<a class="nav-link me-3" href="/municipios">
+Municipios
+</a>
+
+<a class="nav-link me-3" href="/localidades">
+    Localidades
+</a>
+
+<a class="nav-link me-3" href="/generos">
+    Géneros
+</a>
+
+<a class="nav-link me-3" href="/datospersonales">Datos Personales</a>
+
+<a class="nav-link me-3" href="/tipopersonal">Tipo Personal</a>
+
+<a class="nav-link active" href="/personal">
+
+Personal
+
+</a>
+
+<a class="nav-link mb-3" href="/carreras">
+
+Carreras
+
+</a>
+
+<a class="nav-link me-3" href="/alumnos">
+
+Alumnos
+
+</a>
+
+<a class="nav-link me-3" href="/escuela">
+
+Escuela
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<div class="container mt-4">
+
+<a
+href="/personal/create"
+class="btn btn-success mb-3">
+
+Nuevo Personal
+
+</a>
+
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-striped text-center">
+
+<thead class="table-primary">
+
+<tr>
+
+<th>IDPERSONAL</th>
+
+<th>CLAVEEMP</th>
+
+<th>STATUS</th>
+
+<th>TIPO PERSONAL</th>
+
+<th>IDTIPO</th>
+
+<th>ID DATOSP</th>
+
+<th>NOMBRE</th>
+
+<th>FECHA NACIMIENTO</th>
+
+<th>CURP</th>
+
+<th>EMAIL</th>
+
+<th>TELÉFONO</th>
+
+<th>CALLE</th>
+
+<th>NUME</th>
+
+<th>NUMI</th>
+
+<th>CP</th>
+
+<th>ACCIONES</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% results.forEach((empleado)=>{ %>
+
+<tr>
+
+<td><%= empleado.idPersonal %></td>
+
+<td><%= empleado.claveEmp %></td>
+
+<td><%= empleado.status %></td>
+
+<td><%= empleado.personal %></td>
+
+<td><%= empleado.idTipo %></td>
+
+<td><%= empleado.idDatosP %></td>
+
+<td><%= empleado.nombre %></td>
+
+<td>
+<%= empleado.fechaNacimiento ? empleado.fechaNacimiento.toISOString().split('T')[0] : '' %>
+</td>
+
+<td><%= empleado.curp %></td>
+
+<td><%= empleado.email %></td>
+
+<td><%= empleado.telefono %></td>
+
+<td><%= empleado.calle %></td>
+
+<td><%= empleado.numE %></td>
+
+<td><%= empleado.numI %></td>
+
+<td><%= empleado.cp %></td>
+
+<td>
+
+<a
+href="/personal/edit/<%= empleado.idPersonal %>"
+class="btn btn-warning btn-sm">
+
+Editar
+
+</a>
+
+<a
+href="/personal/delete/<%= empleado.idPersonal %>"
+class="btn btn-danger btn-sm">
+
+Eliminar
+
+</a>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<title>Editar Estado</title>
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card border-secondary shadow">
+
+<div class="card-header bg-warning">
+
+Editar Estado
+
+</div>
+
+<div class="card-body">
+
+<form action="/estados/update" method="POST">
+
+<input
+type="hidden"
+name="idEstado"
+value="<%= estado.idEstado %>">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Nombre
+
+</label>
+
+<input
+type="text"
+name="nombre"
+value="<%= estado.nombre %>"
+class="form-control"
+required>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-primary">
+
+Actualizar
+
+</button>
+
+<a
+href="/estados"
+class="btn btn-secondary">
+
+Cancelar
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<title>Datos Personales</title>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+<div class="container">
+
+<a class="navbar-brand me-4" href="/">
+Control Escolar
+</a>
+
+<div class="navbar-nav d-flex flex-row flex-wrap">
+
+<a class="nav-link me-3" href="/asignaturas">Asignaturas</a>
+
+<a class="nav-link me-3" href="/horarios">Horarios</a>
+
+<a class="nav-link me-3" href="/intendencia">Intendencia</a>
+
+<a class="nav-link me-3" href="/estados">Estados</a>
+
+<a class="nav-link me-3" href="/municipios">Municipios</a>
+
+<a class="nav-link me-3" href="/localidades">Localidades</a>
+
+<a class="nav-link me-3" href="/generos">Géneros</a>
+
+<a class="nav-link active" href="/datospersonales">Datos Personales</a>
+
+<a class="nav-link me-3" href="/tipopersonal">Tipo Personal</a>
+
+<a class="nav-link me-3" href="/personal">
+
+Personal
+
+</a>
+
+<a class="nav-link mb-3" href="/carreras">
+
+Carreras
+
+</a>
+
+<a class="nav-link me-3" href="/alumnos">
+
+Alumnos
+
+</a>
+
+<a class="nav-link me-3" href="/escuela">
+
+Escuela
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<div class="container mt-4">
+
+<a href="/datospersonales/create" class="btn btn-success mb-3">
+
+Nuevo Registro
+
+</a>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-striped text-center">
+
+<thead class="table-primary">
+
+<tr>
+
+<th>ID</th>
+<th>Nombre</th>
+<th>Apellido P</th>
+<th>Apellido M</th>
+<th>Fecha Nacimiento</th>
+<th>Teléfono</th>
+<th>Email</th>
+<th>CURP</th>
+<th>Calle</th>
+<th>No. Ext</th>
+<th>No. Int</th>
+<th>CP</th>
+<th>Género</th>
+<th>Estado</th>
+<th>Municipio</th>
+<th>Localidad</th>
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% results.forEach((persona)=>{ %>
+
+<tr>
+
+<td><%= persona.idDatosP %></td>
+
+<td><%= persona.nombre %></td>
+
+<td><%= persona.apellidoP %></td>
+
+<td><%= persona.apellidoM %></td>
+
+<td>
+<%= persona.fechaNacimiento ? persona.fechaNacimiento.toISOString().split('T')[0] : '' %>
+</td>
+
+<td><%= persona.telefono %></td>
+
+<td><%= persona.email %></td>
+
+<td><%= persona.curp %></td>
+
+<td><%= persona.calle %></td>
+
+<td><%= persona.numE %></td>
+
+<td><%= persona.numI %></td>
+
+<td><%= persona.cp %></td>
+
+<td><%= persona.genero %></td>
+
+<td><%= persona.estado %></td>
+
+<td><%= persona.municipio %></td>
+
+<td><%= persona.localidad %></td>
+
+<td>
+
+<a
+href="/datospersonales/edit/<%= persona.idDatosP %>"
+class="btn btn-warning btn-sm">
+
+Editar
+
+</a>
+
+<a
+href="/datospersonales/delete/<%= persona.idDatosP %>"
+class="btn btn-danger btn-sm">
+
+Eliminar
+
+</a>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

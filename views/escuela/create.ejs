@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<title>Nuevo Registro Escuela</title>
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-7">
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+Nuevo Registro Escuela
+
+</div>
+
+<div class="card-body">
+
+<form action="/escuela/save" method="POST">
+
+
+<input
+type="text"
+name="cct"
+placeholder="CCT"
+class="form-control mb-3"
+required>
+
+
+<input
+type="text"
+name="nombre"
+placeholder="Nombre"
+class="form-control mb-3"
+required>
+
+
+<input
+type="text"
+name="telefono"
+placeholder="Teléfono"
+class="form-control mb-3">
+
+
+<input
+type="email"
+name="email"
+placeholder="Email"
+class="form-control mb-3">
+
+
+<input
+type="text"
+name="calle"
+placeholder="Calle"
+class="form-control mb-3">
+
+
+<input
+type="number"
+name="numE"
+placeholder="Número Exterior"
+class="form-control mb-3">
+
+
+<input
+type="number"
+name="numI"
+placeholder="Número Interior"
+class="form-control mb-3">
+
+
+<input
+type="number"
+name="cp"
+placeholder="Código Postal"
+class="form-control mb-3">
+
+
+<button class="btn btn-success">
+
+Guardar
+
+</button>
+
+<a href="/escuela" class="btn btn-secondary">
+
+Cancelar
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

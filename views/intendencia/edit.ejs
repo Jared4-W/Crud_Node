@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<title>Editar Empleado</title>
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card border-secondary shadow">
+
+                <div class="card-header bg-warning">
+
+                    Editar Empleado de Intendencia
+
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/intendencia/update" method="POST">
+
+                        <input
+                        type="hidden"
+                        name="idEmpleado"
+                        value="<%= empleado.idEmpleado %>">
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Nombre
+
+                            </label>
+
+                            <input
+                            type="text"
+                            name="nombre"
+                            value="<%= empleado.nombre %>"
+                            class="form-control"
+                            required>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Teléfono
+
+                            </label>
+
+                            <input
+                            type="text"
+                            name="telefono"
+                            value="<%= empleado.telefono %>"
+                            class="form-control">
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Área
+
+                            </label>
+
+                            <input
+                            type="text"
+                            name="area"
+                            value="<%= empleado.area %>"
+                            class="form-control">
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Turno
+
+                            </label>
+
+                            <input
+                            type="text"
+                            name="turno"
+                            value="<%= empleado.turno %>"
+                            class="form-control">
+
+                        </div>
+
+
+                        <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                            Actualizar
+
+                        </button>
+
+                        <a
+                        href="/intendencia"
+                        class="btn btn-secondary">
+
+                            Cancelar
+
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<title>Editar Datos Personales</title>
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-8">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+Editar Datos Personales
+
+</div>
+
+<div class="card-body">
+
+<form action="/datospersonales/update" method="POST">
+
+<input
+type="hidden"
+name="idDatosP"
+value="<%= persona.idDatosP %>">
+
+
+<input name="nombre" value="<%= persona.nombre %>" class="form-control mb-3">
+
+<input name="apellidoP" value="<%= persona.apellidoP %>" class="form-control mb-3">
+
+<input name="apellidoM" value="<%= persona.apellidoM %>" class="form-control mb-3">
+
+<input
+type="date"
+name="fechaNacimiento"
+value="<%= persona.fechaNacimiento ? persona.fechaNacimiento.toISOString().split('T')[0] : '' %>"
+class="form-control mb-3">
+
+<input name="telefono" value="<%= persona.telefono %>" class="form-control mb-3">
+
+<input name="email" value="<%= persona.email %>" class="form-control mb-3">
+
+<input name="curp" value="<%= persona.curp %>" class="form-control mb-3">
+
+<input name="calle" value="<%= persona.calle %>" class="form-control mb-3">
+
+<input type="number" name="numE" value="<%= persona.numE %>" class="form-control mb-3">
+
+<input type="number" name="numI" value="<%= persona.numI %>" class="form-control mb-3">
+
+<input type="number" name="cp" value="<%= persona.cp %>" class="form-control mb-3">
+
+
+<select name="idEstado" class="form-select mb-3">
+
+<% estados.forEach((estado)=>{ %>
+
+<option
+value="<%= estado.idEstado %>"
+<%= estado.idEstado == persona.idEstado ? 'selected' : '' %>>
+<%= estado.nombre %>
+</option>
+
+<% }) %>
+
+</select>
+
+
+<select name="idMunicipio" class="form-select mb-3">
+
+<% municipios.forEach((municipio)=>{ %>
+
+<option
+value="<%= municipio.idMunicipio %>"
+<%= municipio.idMunicipio == persona.idMunicipio ? 'selected' : '' %>>
+<%= municipio.nombre %>
+</option>
+
+<% }) %>
+
+</select>
+
+
+<select name="idLocalidad" class="form-select mb-3">
+
+<% localidades.forEach((localidad)=>{ %>
+
+<option
+value="<%= localidad.idLocalidad %>"
+<%= localidad.idLocalidad == persona.idLocalidad ? 'selected' : '' %>>
+<%= localidad.nombre %>
+</option>
+
+<% }) %>
+
+</select>
+
+
+<select name="idGenero" class="form-select mb-3">
+
+<% generos.forEach((genero)=>{ %>
+
+<option
+value="<%= genero.idGenero %>"
+<%= genero.idGenero == persona.idGenero ? 'selected' : '' %>>
+<%= genero.genero %>
+</option>
+
+<% }) %>
+
+</select>
+
+
+<button class="btn btn-primary">
+
+Actualizar
+
+</button>
+
+<a href="/datospersonales" class="btn btn-secondary">
+
+Cancelar
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
