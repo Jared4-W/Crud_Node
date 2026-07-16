@@ -7,8 +7,6 @@ exports.login=(req,res)=>{
 
     const password=req.body.password;
 
-    const rol=req.body.rol;
-
     const sql=`
 
     SELECT *
@@ -23,13 +21,11 @@ exports.login=(req,res)=>{
 
     AND U.Pass=?
 
-    AND R.Nombre=?
-
     `;
 
     conexion.query(
         sql,
-        [usuario,password,rol],
+        [usuario,password],
         (error,resultado)=>{
 
             if(error){
