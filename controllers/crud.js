@@ -1,5 +1,64 @@
 const conexion = require('../database/db');
 
+// metodo login
+exports.login=(req,res)=>{
+
+    const usuario=req.body.usuario;
+
+    const password=req.body.password;
+
+    const rol=req.body.rol;
+
+    const sql=`
+
+    SELECT *
+
+    FROM Tb_Usuarios U
+
+    INNER JOIN Tb_Roles R
+
+    ON U.Id_Rol=R.Id_Rol
+
+    WHERE U.Usuarios=?
+
+    AND U.Pass=?
+
+    AND R.Nombre=?
+
+    `;
+
+    conexion.query(
+        sql,
+        [usuario,password,rol],
+        (error,resultado)=>{
+
+            if(error){
+
+                console.log(error);
+
+                return;
+            }
+
+            if(resultado.length>0){
+
+                req.session.usuario=
+                resultado[0].Usuarios;
+
+                req.session.rol=
+                resultado[0].Nombre;
+
+                res.redirect('/asignaturas');
+
+            }else{
+
+                res.redirect('/error');
+
+            }
+
+        }
+    );
+
+}
 
 // guardar asignatura
 exports.saveAsignatura = (req, res)=>{

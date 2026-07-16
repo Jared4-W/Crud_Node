@@ -121,7 +121,7 @@ class="btn btn-warning">
 Editar
 
 </a>
-
+<% if(session.rol === 'Admin'){ %>
 <a
 href="/generos/delete/<%= item.idGenero %>"
 class="btn btn-danger">
@@ -129,7 +129,7 @@ class="btn btn-danger">
 Eliminar
 
 </a>
-
+<% } %>
 </td>
 
 </tr>

@@ -137,13 +137,13 @@ href="/intendencia/edit/<%= empleado.idEmpleado %>"
 class="btn btn-warning">
 Editar
 </a>
-
+<% if(session.rol === 'Admin'){ %>
 <a
 href="/intendencia/delete/<%= empleado.idEmpleado %>"
 class="btn btn-danger">
 Eliminar
 </a>
-
+<% } %>
 </td>
 
 </tr>

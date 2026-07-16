@@ -4,15 +4,34 @@ const router = express.Router();
 const conexion = require('./database/db');
 const crud = require('./controllers/crud');
 
+const verificarSesion = require('./middlewares/auth');
+const soloAdmin = require('./middlewares/admin');
+
+// error login
+router.get('/error', (req,res)=>{
+
+    res.render('error');
+
+});
 
 // página principal
-router.get('/', (req, res)=>{
-    res.redirect('/asignaturas');
+router.get('/',(req,res)=>{
+
+    res.render('login');
+
 });
+router.post(
+    '/login',
+    crud.login
+);
+
+/*router.get('/', (req, res)=>{
+     res.redirect('/asignaturas');
+})*/
 
 
 // mostrar asignaturas
-router.get('/asignaturas', (req, res)=>{
+router.get('/asignaturas', verificarSesion,(req, res)=>{
 
     conexion.query('SELECT * FROM CAsignaturas', (error, results)=>{
 
@@ -68,7 +87,8 @@ router.post('/asignaturas/update', crud.updateAsignatura);
 
 
 // eliminar
-router.get('/asignaturas/delete/:idAsignatura', (req,res)=>{
+router.get('/asignaturas/delete/:idAsignatura', verificarSesion,
+    soloAdmin,(req,res)=>{
 
     const id = req.params.idAsignatura;
 
@@ -92,7 +112,7 @@ router.get('/asignaturas/delete/:idAsignatura', (req,res)=>{
 
 
 //CHorarios
-router.get('/horarios', (req,res)=>{
+router.get('/horarios', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CHorarios',
@@ -146,7 +166,8 @@ router.get('/horarios/edit/:idHorario', (req,res)=>{
 
 });
 
-router.get('/horarios/delete/:idHorario', (req,res)=>{
+router.get('/horarios/delete/:idHorario', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idHorario;
 
@@ -173,7 +194,7 @@ router.post('/horarios/update', crud.updateHorario);
 
 
 //CIntendencia
-router.get('/intendencia', (req,res)=>{
+router.get('/intendencia', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CIntendencia',
@@ -234,7 +255,8 @@ router.get('/intendencia/edit/:idEmpleado', (req,res)=>{
 
 router.post('/intendencia/update', crud.updateIntendencia);
 
-router.get('/intendencia/delete/:idEmpleado', (req,res)=>{
+router.get('/intendencia/delete/:idEmpleado', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idEmpleado;
 
@@ -258,7 +280,7 @@ router.get('/intendencia/delete/:idEmpleado', (req,res)=>{
 
 
 //CEstados
-router.get('/estados', (req,res)=>{
+router.get('/estados', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CEstados',
@@ -319,7 +341,8 @@ router.get('/estados/edit/:idEstado', (req,res)=>{
 
 router.post('/estados/update', crud.updateEstado);
 
-router.get('/estados/delete/:idEstado', (req,res)=>{
+router.get('/estados/delete/:idEstado', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idEstado;
 
@@ -343,7 +366,7 @@ router.get('/estados/delete/:idEstado', (req,res)=>{
 
 
 //municipios
-router.get('/municipios', (req,res)=>{
+router.get('/municipios', verificarSesion,(req,res)=>{
 
     conexion.query(
         `
@@ -442,7 +465,8 @@ router.get('/municipios/edit/:idMunicipio', (req,res)=>{
 
 router.post('/municipios/update', crud.updateMunicipio);
 
-router.get('/municipios/delete/:idMunicipio', (req,res)=>{
+router.get('/municipios/delete/:idMunicipio', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idMunicipio;
 
@@ -466,7 +490,7 @@ router.get('/municipios/delete/:idMunicipio', (req,res)=>{
 
 
 //localidad
-router.get('/localidades', (req,res)=>{
+router.get('/localidades', verificarSesion,(req,res)=>{
 
     conexion.query(
         `
@@ -565,7 +589,8 @@ router.get('/localidades/edit/:idLocalidad', (req,res)=>{
 
 router.post('/localidades/update', crud.updateLocalidad);
 
-router.get('/localidades/delete/:idLocalidad', (req,res)=>{
+router.get('/localidades/delete/:idLocalidad', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idLocalidad;
 
@@ -589,7 +614,7 @@ router.get('/localidades/delete/:idLocalidad', (req,res)=>{
 
 
 //genero
-router.get('/generos', (req,res)=>{
+router.get('/generos', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM Genero',
@@ -650,7 +675,8 @@ router.get('/generos/edit/:idGenero', (req,res)=>{
 
 router.post('/generos/update', crud.updateGenero);
 
-router.get('/generos/delete/:idGenero', (req,res)=>{
+router.get('/generos/delete/:idGenero', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idGenero;
 
@@ -674,7 +700,7 @@ router.get('/generos/delete/:idGenero', (req,res)=>{
 
 
 //datos personales
-router.get('/datospersonales', (req,res)=>{
+router.get('/datospersonales', verificarSesion,(req,res)=>{
 
     conexion.query(
         `
@@ -829,7 +855,8 @@ router.post('/datospersonales/save', crud.saveDatosPersonales);
 
 router.post('/datospersonales/update', crud.updateDatosPersonales);
 
-router.get('/datospersonales/delete/:idDatosP', (req,res)=>{
+router.get('/datospersonales/delete/:idDatosP', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idDatosP;
 
@@ -854,7 +881,7 @@ router.get('/datospersonales/delete/:idDatosP', (req,res)=>{
 
 // CTipoPersonal
 
-router.get('/tipopersonal', (req,res)=>{
+router.get('/tipopersonal', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CTipoPersonal',
@@ -920,7 +947,8 @@ router.get('/tipopersonal/edit/:idTipo', (req,res)=>{
 router.post('/tipopersonal/update', crud.updateTipoPersonal);
 
 
-router.get('/tipopersonal/delete/:idTipo', (req,res)=>{
+router.get('/tipopersonal/delete/:idTipo', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idTipo;
 
@@ -945,7 +973,7 @@ router.get('/tipopersonal/delete/:idTipo', (req,res)=>{
 
 // CPersonal
 
-router.get('/personal', (req,res)=>{
+router.get('/personal', verificarSesion,(req,res)=>{
 
     conexion.query(
         `
@@ -1090,7 +1118,8 @@ router.post('/personal/update', crud.updatePersonal);
 
 
 
-router.get('/personal/delete/:idPersonal', (req,res)=>{
+router.get('/personal/delete/:idPersonal', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idPersonal;
 
@@ -1115,7 +1144,7 @@ router.get('/personal/delete/:idPersonal', (req,res)=>{
 
 // CCarreras
 
-router.get('/carreras', (req,res)=>{
+router.get('/carreras', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CCarreras',
@@ -1181,7 +1210,8 @@ router.get('/carreras/edit/:idCarrera', (req,res)=>{
 router.post('/carreras/update', crud.updateCarrera);
 
 
-router.get('/carreras/delete/:idCarrera', (req,res)=>{
+router.get('/carreras/delete/:idCarrera', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const id = req.params.idCarrera;
 
@@ -1206,7 +1236,7 @@ router.get('/carreras/delete/:idCarrera', (req,res)=>{
 
 // CAlumnos
 
-router.get('/alumnos', (req,res)=>{
+router.get('/alumnos', verificarSesion,(req,res)=>{
 
     conexion.query(
         `
@@ -1339,7 +1369,8 @@ router.post('/alumnos/update', crud.updateAlumno);
 
 
 
-router.get('/alumnos/delete/:matricula', (req,res)=>{
+router.get('/alumnos/delete/:matricula', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const matricula = req.params.matricula;
 
@@ -1364,7 +1395,7 @@ router.get('/alumnos/delete/:matricula', (req,res)=>{
 
 // CDatosEscuela
 
-router.get('/escuela', (req,res)=>{
+router.get('/escuela', verificarSesion,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CDatosEscuela',
@@ -1432,7 +1463,8 @@ router.post('/escuela/update', crud.updateEscuela);
 
 
 
-router.get('/escuela/delete/:cct', (req,res)=>{
+router.get('/escuela/delete/:cct', verificarSesion,
+soloAdmin,(req,res)=>{
 
     const cct = req.params.cct;
 

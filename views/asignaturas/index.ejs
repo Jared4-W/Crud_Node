@@ -129,14 +129,14 @@ class="btn btn-warning"
 >
 Editar
 </a>
-
+<% if(session.rol === 'Admin'){ %>
 <a
 href="/asignaturas/delete/<%= user.idAsignatura %>"
 class="btn btn-danger"
 >
 Eliminar
 </a>
-
+<% } %>
 </td>
 
 </tr>

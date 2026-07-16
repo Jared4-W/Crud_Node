@@ -139,7 +139,7 @@ class="btn btn-warning">
 Editar
 
 </a>
-
+<% if(session.rol === 'Admin'){ %>
 <a
 href="/municipios/delete/<%= municipio.idMunicipio %>"
 class="btn btn-danger">
@@ -147,7 +147,7 @@ class="btn btn-danger">
 Eliminar
 
 </a>
-
+<% } %>
 </td>
 
 </tr>

@@ -160,7 +160,7 @@ class="btn btn-warning btn-sm">
 Editar
 
 </a>
-
+<% if(session.rol === 'Admin'){ %>
 <a
 href="/datospersonales/delete/<%= persona.idDatosP %>"
 class="btn btn-danger btn-sm">
@@ -168,7 +168,7 @@ class="btn btn-danger btn-sm">
 Eliminar
 
 </a>
-
+<% } %>
 </td>
 
 </tr>
