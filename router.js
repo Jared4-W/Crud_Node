@@ -4,8 +4,10 @@ const router = express.Router();
 const conexion = require('./database/db');
 const crud = require('./controllers/crud');
 
-const verificarSesion = require('./middlewares/auth');
+//const verificarSesion = require('./middlewares/auth');
 const soloAdmin = require('./middlewares/admin');
+const editorOAdmin = require('./middlewares/editorOAdmin');
+const verificarToken = require('./middlewares/verificarToken');
 
 // error login
 router.get('/error', (req,res)=>{
@@ -31,7 +33,7 @@ router.post(
 
 
 // mostrar asignaturas
-router.get('/asignaturas', verificarSesion,(req, res)=>{
+router.get('/asignaturas', verificarToken,(req, res)=>{
 
     conexion.query('SELECT * FROM CAsignaturas', (error, results)=>{
 
@@ -49,18 +51,18 @@ router.get('/asignaturas', verificarSesion,(req, res)=>{
 
 
 // vista crear
-router.get('/asignaturas/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/asignaturas/create', verificarToken, editorOAdmin,(req,res)=>{
     res.render('asignaturas/create');
 });
 
 
 // guardar
-router.post('/asignaturas/save', verificarSesion,
+router.post('/asignaturas/save', verificarToken,
     editorOAdmin, crud.saveAsignatura);
 
 
 // editar
-router.get('/asignaturas/edit/:idAsignatura', verificarSesion,
+router.get('/asignaturas/edit/:idAsignatura', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idAsignatura;
@@ -85,12 +87,12 @@ router.get('/asignaturas/edit/:idAsignatura', verificarSesion,
 
 
 // actualizar
-router.post('/asignaturas/update', verificarSesion,
+router.post('/asignaturas/update', verificarToken,
     editorOAdmin, crud.updateAsignatura);
 
 
 // eliminar
-router.get('/asignaturas/delete/:idAsignatura', verificarSesion,
+router.get('/asignaturas/delete/:idAsignatura', verificarToken,
     soloAdmin,(req,res)=>{
 
     const id = req.params.idAsignatura;
@@ -115,7 +117,7 @@ router.get('/asignaturas/delete/:idAsignatura', verificarSesion,
 
 
 //CHorarios
-router.get('/horarios', verificarSesion,(req,res)=>{
+router.get('/horarios', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CHorarios',
@@ -136,13 +138,13 @@ router.get('/horarios', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/horarios/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/horarios/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('horarios/create');
 
 });
 
-router.get('/horarios/edit/:idHorario', verificarSesion,
+router.get('/horarios/edit/:idHorario', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idHorario;
@@ -170,7 +172,7 @@ router.get('/horarios/edit/:idHorario', verificarSesion,
 
 });
 
-router.get('/horarios/delete/:idHorario', verificarSesion,
+router.get('/horarios/delete/:idHorario', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idHorario;
@@ -191,16 +193,16 @@ soloAdmin,(req,res)=>{
 
 });
 
-router.post('/horarios/save', verificarSesion,
+router.post('/horarios/save', verificarToken,
     editorOAdmin, crud.saveHorario);
 
-router.post('/horarios/update', verificarSesion,
+router.post('/horarios/update', verificarToken,
     editorOAdmin, crud.updateHorario);
 
 
 
 //CIntendencia
-router.get('/intendencia', verificarSesion,(req,res)=>{
+router.get('/intendencia', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CIntendencia',
@@ -224,16 +226,16 @@ router.get('/intendencia', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/intendencia/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/intendencia/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('intendencia/create');
 
 });
 
-router.post('/intendencia/save', verificarSesion,
+router.post('/intendencia/save', verificarToken,
     editorOAdmin, crud.saveIntendencia);
 
-router.get('/intendencia/edit/:idEmpleado', verificarSesion,
+router.get('/intendencia/edit/:idEmpleado', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idEmpleado;
@@ -261,10 +263,10 @@ router.get('/intendencia/edit/:idEmpleado', verificarSesion,
 
 });
 
-router.post('/intendencia/update', verificarSesion,
+router.post('/intendencia/update', verificarToken,
     editorOAdmin, crud.updateIntendencia);
 
-router.get('/intendencia/delete/:idEmpleado', verificarSesion,
+router.get('/intendencia/delete/:idEmpleado', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idEmpleado;
@@ -289,7 +291,7 @@ soloAdmin,(req,res)=>{
 
 
 //CEstados
-router.get('/estados', verificarSesion,(req,res)=>{
+router.get('/estados', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CEstados',
@@ -313,16 +315,16 @@ router.get('/estados', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/estados/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/estados/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('estados/create');
 
 });
 
-router.post('/estados/save', verificarSesion,
+router.post('/estados/save', verificarToken,
     editorOAdmin, crud.saveEstado);
 
-router.get('/estados/edit/:idEstado', verificarSesion,
+router.get('/estados/edit/:idEstado', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idEstado;
@@ -350,10 +352,10 @@ router.get('/estados/edit/:idEstado', verificarSesion,
 
 });
 
-router.post('/estados/update', verificarSesion,
+router.post('/estados/update', verificarToken,
     editorOAdmin, crud.updateEstado);
 
-router.get('/estados/delete/:idEstado', verificarSesion,
+router.get('/estados/delete/:idEstado', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idEstado;
@@ -378,7 +380,7 @@ soloAdmin,(req,res)=>{
 
 
 //municipios
-router.get('/municipios', verificarSesion,(req,res)=>{
+router.get('/municipios', verificarToken,(req,res)=>{
 
     conexion.query(
         `
@@ -410,7 +412,7 @@ router.get('/municipios', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/municipios/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/municipios/create', verificarToken, editorOAdmin,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CEstados',
@@ -434,10 +436,10 @@ router.get('/municipios/create', verificarSesion, editorOAdmin,(req,res)=>{
 
 });
 
-router.post('/municipios/save', verificarSesion,
+router.post('/municipios/save', verificarToken,
     editorOAdmin, crud.saveMunicipio);
 
-router.get('/municipios/edit/:idMunicipio', verificarSesion,
+router.get('/municipios/edit/:idMunicipio', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idMunicipio;
@@ -477,10 +479,10 @@ router.get('/municipios/edit/:idMunicipio', verificarSesion,
 
 });
 
-router.post('/municipios/update', verificarSesion,
+router.post('/municipios/update', verificarToken,
     editorOAdmin, crud.updateMunicipio);
 
-router.get('/municipios/delete/:idMunicipio', verificarSesion,
+router.get('/municipios/delete/:idMunicipio', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idMunicipio;
@@ -505,7 +507,7 @@ soloAdmin,(req,res)=>{
 
 
 //localidad
-router.get('/localidades', verificarSesion,(req,res)=>{
+router.get('/localidades', verificarToken,(req,res)=>{
 
     conexion.query(
         `
@@ -537,7 +539,7 @@ router.get('/localidades', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/localidades/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/localidades/create', verificarToken, editorOAdmin,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CMunicipio',
@@ -561,10 +563,10 @@ router.get('/localidades/create', verificarSesion, editorOAdmin,(req,res)=>{
 
 });
 
-router.post('/localidades/save', verificarSesion,
+router.post('/localidades/save', verificarToken,
     editorOAdmin, crud.saveLocalidad);
 
-router.get('/localidades/edit/:idLocalidad', verificarSesion,
+router.get('/localidades/edit/:idLocalidad', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idLocalidad;
@@ -604,10 +606,10 @@ router.get('/localidades/edit/:idLocalidad', verificarSesion,
 
 });
 
-router.post('/localidades/update', verificarSesion,
+router.post('/localidades/update', verificarToken,
     editorOAdmin, crud.updateLocalidad);
 
-router.get('/localidades/delete/:idLocalidad', verificarSesion,
+router.get('/localidades/delete/:idLocalidad', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idLocalidad;
@@ -632,7 +634,7 @@ soloAdmin,(req,res)=>{
 
 
 //genero
-router.get('/generos', verificarSesion,(req,res)=>{
+router.get('/generos', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM Genero',
@@ -656,16 +658,16 @@ router.get('/generos', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/generos/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/generos/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('generos/create');
 
 });
 
-router.post('/generos/save', verificarSesion,
+router.post('/generos/save', verificarToken,
     editorOAdmin, crud.saveGenero);
 
-router.get('/generos/edit/:idGenero', verificarSesion,
+router.get('/generos/edit/:idGenero', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idGenero;
@@ -693,10 +695,10 @@ router.get('/generos/edit/:idGenero', verificarSesion,
 
 });
 
-router.post('/generos/update', verificarSesion,
+router.post('/generos/update', verificarToken,
     editorOAdmin, crud.updateGenero);
 
-router.get('/generos/delete/:idGenero', verificarSesion,
+router.get('/generos/delete/:idGenero', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idGenero;
@@ -721,7 +723,7 @@ soloAdmin,(req,res)=>{
 
 
 //datos personales
-router.get('/datospersonales', verificarSesion,(req,res)=>{
+router.get('/datospersonales', verificarToken,(req,res)=>{
 
     conexion.query(
         `
@@ -765,7 +767,7 @@ router.get('/datospersonales', verificarSesion,(req,res)=>{
 
 });
 
-router.get('/datospersonales/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/datospersonales/create', verificarToken, editorOAdmin,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CEstados',
@@ -815,7 +817,7 @@ router.get('/datospersonales/create', verificarSesion, editorOAdmin,(req,res)=>{
 
 });
 
-router.get('/datospersonales/edit/:idDatosP', verificarSesion,
+router.get('/datospersonales/edit/:idDatosP', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idDatosP;
@@ -873,13 +875,13 @@ router.get('/datospersonales/edit/:idDatosP', verificarSesion,
 
 });
 
-router.post('/datospersonales/save', verificarSesion,
+router.post('/datospersonales/save', verificarToken,
     editorOAdmin, crud.saveDatosPersonales);
 
-router.post('/datospersonales/update', verificarSesion,
+router.post('/datospersonales/update', verificarToken,
     editorOAdmin, crud.updateDatosPersonales);
 
-router.get('/datospersonales/delete/:idDatosP', verificarSesion,
+router.get('/datospersonales/delete/:idDatosP', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idDatosP;
@@ -905,7 +907,7 @@ soloAdmin,(req,res)=>{
 
 // CTipoPersonal
 
-router.get('/tipopersonal', verificarSesion,(req,res)=>{
+router.get('/tipopersonal', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CTipoPersonal',
@@ -930,18 +932,18 @@ router.get('/tipopersonal', verificarSesion,(req,res)=>{
 });
 
 
-router.get('/tipopersonal/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/tipopersonal/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('tipopersonal/create');
 
 });
 
 
-router.post('/tipopersonal/save', verificarSesion,
+router.post('/tipopersonal/save', verificarToken,
     editorOAdmin, crud.saveTipoPersonal);
 
 
-router.get('/tipopersonal/edit/:idTipo', verificarSesion,
+router.get('/tipopersonal/edit/:idTipo', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idTipo;
@@ -970,11 +972,11 @@ router.get('/tipopersonal/edit/:idTipo', verificarSesion,
 });
 
 
-router.post('/tipopersonal/update', verificarSesion,
+router.post('/tipopersonal/update', verificarToken,
     editorOAdmin, crud.updateTipoPersonal);
 
 
-router.get('/tipopersonal/delete/:idTipo', verificarSesion,
+router.get('/tipopersonal/delete/:idTipo', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idTipo;
@@ -1000,7 +1002,7 @@ soloAdmin,(req,res)=>{
 
 // CPersonal
 
-router.get('/personal', verificarSesion,(req,res)=>{
+router.get('/personal', verificarToken,(req,res)=>{
 
     conexion.query(
         `
@@ -1048,7 +1050,7 @@ router.get('/personal', verificarSesion,(req,res)=>{
 
 
 
-router.get('/personal/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/personal/create', verificarToken, editorOAdmin,(req,res)=>{
 
     conexion.query(
         'SELECT idDatosP FROM CDatosPersonales',
@@ -1085,12 +1087,12 @@ router.get('/personal/create', verificarSesion, editorOAdmin,(req,res)=>{
 });
 
 
-router.post('/personal/save', verificarSesion,
+router.post('/personal/save', verificarToken,
     editorOAdmin, crud.savePersonal);
 
 
 
-router.get('/personal/edit/:idPersonal', verificarSesion,
+router.get('/personal/edit/:idPersonal', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idPersonal;
@@ -1143,12 +1145,12 @@ router.get('/personal/edit/:idPersonal', verificarSesion,
 });
 
 
-router.post('/personal/update', verificarSesion,
+router.post('/personal/update', verificarToken,
     editorOAdmin, crud.updatePersonal);
 
 
 
-router.get('/personal/delete/:idPersonal', verificarSesion,
+router.get('/personal/delete/:idPersonal', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idPersonal;
@@ -1174,7 +1176,7 @@ soloAdmin,(req,res)=>{
 
 // CCarreras
 
-router.get('/carreras', verificarSesion,(req,res)=>{
+router.get('/carreras', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CCarreras',
@@ -1199,18 +1201,18 @@ router.get('/carreras', verificarSesion,(req,res)=>{
 });
 
 
-router.get('/carreras/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/carreras/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('carreras/create');
 
 });
 
 
-router.post('/carreras/save', verificarSesion,
+router.post('/carreras/save', verificarToken,
     editorOAdmin, crud.saveCarrera);
 
 
-router.get('/carreras/edit/:idCarrera', verificarSesion,
+router.get('/carreras/edit/:idCarrera', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const id = req.params.idCarrera;
@@ -1239,11 +1241,11 @@ router.get('/carreras/edit/:idCarrera', verificarSesion,
 });
 
 
-router.post('/carreras/update', verificarSesion,
+router.post('/carreras/update', verificarToken,
     editorOAdmin, crud.updateCarrera);
 
 
-router.get('/carreras/delete/:idCarrera', verificarSesion,
+router.get('/carreras/delete/:idCarrera', verificarToken,
 soloAdmin,(req,res)=>{
 
     const id = req.params.idCarrera;
@@ -1269,7 +1271,7 @@ soloAdmin,(req,res)=>{
 
 // CAlumnos
 
-router.get('/alumnos', verificarSesion,(req,res)=>{
+router.get('/alumnos', verificarToken,(req,res)=>{
 
     conexion.query(
         `
@@ -1319,7 +1321,7 @@ router.get('/alumnos', verificarSesion,(req,res)=>{
 
 
 
-router.get('/alumnos/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/alumnos/create', verificarToken, editorOAdmin,(req,res)=>{
 
     conexion.query(
         'SELECT idCarrera FROM CCarreras',
@@ -1350,12 +1352,12 @@ router.get('/alumnos/create', verificarSesion, editorOAdmin,(req,res)=>{
 });
 
 
-router.post('/alumnos/save', verificarSesion,
+router.post('/alumnos/save', verificarToken,
     editorOAdmin, crud.saveAlumno);
 
 
 
-router.get('/alumnos/edit/:matricula', verificarSesion,
+router.get('/alumnos/edit/:matricula', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const matricula = req.params.matricula;
@@ -1400,12 +1402,12 @@ router.get('/alumnos/edit/:matricula', verificarSesion,
 });
 
 
-router.post('/alumnos/update', verificarSesion,
+router.post('/alumnos/update', verificarToken,
     editorOAdmin, crud.updateAlumno);
 
 
 
-router.get('/alumnos/delete/:matricula', verificarSesion,
+router.get('/alumnos/delete/:matricula', verificarToken,
 soloAdmin,(req,res)=>{
 
     const matricula = req.params.matricula;
@@ -1431,7 +1433,7 @@ soloAdmin,(req,res)=>{
 
 // CDatosEscuela
 
-router.get('/escuela', verificarSesion,(req,res)=>{
+router.get('/escuela', verificarToken,(req,res)=>{
 
     conexion.query(
         'SELECT * FROM CDatosEscuela',
@@ -1456,19 +1458,19 @@ router.get('/escuela', verificarSesion,(req,res)=>{
 });
 
 
-router.get('/escuela/create', verificarSesion, editorOAdmin,(req,res)=>{
+router.get('/escuela/create', verificarToken, editorOAdmin,(req,res)=>{
 
     res.render('escuela/create');
 
 });
 
 
-router.post('/escuela/save', verificarSesion,
+router.post('/escuela/save', verificarToken,
     editorOAdmin, crud.saveEscuela);
 
 
 
-router.get('/escuela/edit/:cct', verificarSesion,
+router.get('/escuela/edit/:cct', verificarToken,
     editorOAdmin, (req,res)=>{
 
     const cct = req.params.cct;
@@ -1497,12 +1499,12 @@ router.get('/escuela/edit/:cct', verificarSesion,
 });
 
 
-router.post('/escuela/update', verificarSesion,
+router.post('/escuela/update', verificarToken,
     editorOAdmin, crud.updateEscuela);
 
 
 
-router.get('/escuela/delete/:cct', verificarSesion,
+router.get('/escuela/delete/:cct', verificarToken,
 soloAdmin,(req,res)=>{
 
     const cct = req.params.cct;

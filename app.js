@@ -1,11 +1,17 @@
+require('dotenv').config();
+
 const express = require('express');  //referenciar a express
 const app = express();  // se invoca express mediante su clase
-const session = require('express-session');
+//const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 app.set('view engine', 'ejs');  //invocar motor de plantillas
 
 app.use(express.urlencoded({extended:false}));//definir como guadar datos
-app.use(session({
+
+app.use(cookieParser());
+
+/* app.use(session({
 
     secret:'control_escolar',
 
@@ -13,7 +19,7 @@ app.use(session({
 
     saveUninitialized:false
 
-}));
+})); */
 
 app.use((req,res,next)=>{
 

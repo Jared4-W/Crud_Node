@@ -1,4 +1,4 @@
-function verificarSesion(
+/* function verificarSesion(
 req,
 res,
 next){
@@ -14,4 +14,4 @@ next){
     }
 
 }
-module.exports = verificarSesion;
+module.exports = verificarSesion; */

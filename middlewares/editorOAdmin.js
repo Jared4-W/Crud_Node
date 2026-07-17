@@ -1,8 +1,8 @@
 function editorOAdmin(req,res,next){
 
     if(
-        req.session.rol === 'Admin' ||
-        req.session.rol === 'Editor'
+        req.rol === 'Admin' ||
+        req.rol === 'Editor'
     ){
 
         next();

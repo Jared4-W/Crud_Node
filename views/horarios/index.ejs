@@ -140,7 +140,7 @@ class="btn btn-warning"
 >
 Editar
 </a>
-<% if(session.rol === 'Admin'){ %>
+<% if(rol === 'Admin'){ %>
 <a
 href="/horarios/delete/<%= horario.idHorario %>"
 class="btn btn-danger"

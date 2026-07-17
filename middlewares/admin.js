@@ -1,15 +1,11 @@
 function soloAdmin(req,res,next){
 
-    if(req.session.rol === 'Admin'){
-
+    if(req.rol === "Admin"){
         next();
-
-    }else{
-
-        res.send('Acceso Denegado');
-
+    }
+    else{
+        res.redirect('/');
     }
 
 }
-
 module.exports = soloAdmin;

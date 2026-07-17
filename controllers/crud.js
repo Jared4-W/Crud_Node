@@ -1,4 +1,5 @@
 const conexion = require('../database/db');
+const jwt = require('jsonwebtoken');
 
 // metodo login
 exports.login=(req,res)=>{
@@ -37,11 +38,23 @@ exports.login=(req,res)=>{
 
             if(resultado.length>0){
 
-                req.session.usuario=
-                resultado[0].Usuarios;
+                // req.session.usuario=
+                // resultado[0].Usuarios;
 
-                req.session.rol=
-                resultado[0].Nombre;
+                // req.session.rol=
+                // resultado[0].Nombre;
+
+                const token = jwt.sign(
+    {
+        usuario: resultado[0].Usuarios,
+        rol: resultado[0].Nombre
+    },
+    process.env.JWT_SECRET
+);
+
+res.cookie('token', token, {
+        httpOnly: true
+    });
 
                 res.redirect('/asignaturas');
 
