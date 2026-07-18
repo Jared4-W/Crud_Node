@@ -50,9 +50,10 @@ class="form-control mb-3">
 
 <input name="telefono" value="<%= persona.telefono %>" class="form-control mb-3">
 
-<input name="email" value="<%= persona.email %>" class="form-control mb-3">
+<input type="email" name="email" value="<%= persona.email %>" class="form-control mb-3">
 
-<input name="curp" value="<%= persona.curp %>" class="form-control mb-3">
+<input name="curp" value="<%= persona.curp %>" maxlength="18"
+style="text-transform:uppercase" class="form-control mb-3" required>
 
 <input name="calle" value="<%= persona.calle %>" class="form-control mb-3">
 

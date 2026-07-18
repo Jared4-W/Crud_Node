@@ -1,5 +1,6 @@
 const conexion = require('../database/db');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 // metodo login
 exports.login=(req,res)=>{
@@ -496,7 +497,7 @@ exports.updateGenero = (req,res)=>{
 
 
 //datos personales
-exports.saveDatosPersonales = (req,res)=>{
+exports.saveDatosPersonales = async (req,res)=>{
 
     const {
         nombre,
@@ -516,6 +517,42 @@ exports.saveDatosPersonales = (req,res)=>{
         idGenero
     } = req.body;
 
+    const curpLimpio = curp.toUpperCase().trim();
+
+try {
+
+        const respuesta = await axios.get(
+            'https://api.valida-curp.com.mx/curp/validar/',
+            {
+                params:{
+                    token: process.env.CURP_TOKEN,
+                    curp: curpLimpio
+                }
+            }
+        );
+
+        console.log('RESPUESTA API:');
+        console.log(respuesta.data);
+
+    } catch(error){
+
+    console.log('ERROR API');
+
+    if(error.response){
+
+        console.log('STATUS:', error.response.status);
+
+        console.log('DATA:');
+        console.log(error.response.data);
+
+    }else{
+
+        console.log(error.message);
+
+    }
+
+}
+
     conexion.query(
         'INSERT INTO CDatosPersonales SET ?',
         {
@@ -525,7 +562,7 @@ exports.saveDatosPersonales = (req,res)=>{
             fechaNacimiento,
             telefono,
             email,
-            curp,
+            curp: curpLimpio,
             calle,
             numE,
             numI,
@@ -572,6 +609,8 @@ exports.updateDatosPersonales = (req,res)=>{
         idGenero
     } = req.body;
 
+    const curpLimpio = curp.toUpperCase().trim();
+
     conexion.query(
         'UPDATE CDatosPersonales SET ? WHERE idDatosP = ?',
         [
@@ -582,7 +621,7 @@ exports.updateDatosPersonales = (req,res)=>{
                 fechaNacimiento,
                 telefono,
                 email,
-                curp,
+                curp: curpLimpio,
                 calle,
                 numE,
                 numI,
