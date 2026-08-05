@@ -1,4 +1,4 @@
-require('dotenv').config();
+/* require('dotenv').config();
 
 const express = require('express');  //referenciar a express
 const app = express();  // se invoca express mediante su clase
@@ -41,4 +41,26 @@ app.use('/', require('./router'));  //refrenciar archivo router.js
 
 app.listen(PORT, () => {  //render
   console.log(`SERVER corriendo en puerto ${PORT}`);
-});
+});  */
+
+require('dotenv').config();
+
+const express = require('express');
+const app = express();
+const cookieParser = require('cookie-parser');
+
+app.set('view engine', 'ejs');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+
+//  NO usar sesiones
+
+app.use('/', require('./router'));
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`SERVER corriendo en puerto ${PORT}`);
+}); 
