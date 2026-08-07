@@ -117,7 +117,7 @@ CREATE DATABASE control_escolar;
 Importar el archivo SQL incluido en el proyecto:
 
 ```bash
-mysql -u root -p control_escolar < control_escolar.sql
+mysql -u root -p control_escolar < database/Crud_Node_Control_Escolar_Railway - Render.sql
 ```
 
 Si el nombre del archivo SQL es diferente, reemplazarlo por el correspondiente.
