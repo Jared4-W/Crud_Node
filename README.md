@@ -65,7 +65,7 @@ Antes de ejecutar el proyecto es necesario tener instalado:
 
 * Node.js (versión 18 o superior recomendada)
 * npm
-* MySQL Server
+* MySQL Workbench 
 * Git
 
 Verificar instalación:
