@@ -542,7 +542,7 @@ corresponde a:
 
 ---
 
-```
+
 
 5. Copiar el valor proporcionado por Railway.
 
@@ -926,7 +926,7 @@ No publicar su valor real en:
 
 ---
 
-# 35. Flujo completo de Railway
+# 23. Flujo completo de Railway
 
 Para una nueva instalación del proyecto, el procedimiento completo es:
 
@@ -980,7 +980,7 @@ Para una nueva instalación del proyecto, el procedimiento completo es:
 
 ---
 
-# 36. Verificación final de Railway
+# 24. Verificación final de Railway
 
 Antes de continuar con el despliegue de Render, comprobar:
 
