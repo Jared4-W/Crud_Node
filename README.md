@@ -117,7 +117,7 @@ CREATE DATABASE control_escolar;
 Importar el archivo SQL incluido en el proyecto:
 
 ```bash
-mysql -u root -p control_escolar < database/Crud_Node_Control_Escolar_Railway - Render.sql
+mysql -u root -p control_escolar < database/control_escolar.sql
 ```
 
 Si el nombre del archivo SQL es diferente, reemplazarlo por el correspondiente.
@@ -136,7 +136,7 @@ en la raíz del proyecto.
 
 Ejemplo:
 
-Nota: curp_token si debe ir como esta o conseguir uno propio en: https://api.valida-curp.com.mx/
+Nota: curp_token si debe ir como esta
 ```env
 PORT=5000
 
@@ -381,13 +381,16 @@ Railway creará automáticamente una instancia MySQL.
 
 ## 4. Obtener las credenciales de conexión
 
-Dentro del servicio MySQL abrir la pestaña:
+
+Seleccionar el servicio **MySQL** y abrir:
 
 ```text
 Variables
 ```
 
-Railway mostrará valores similares a:
+Railway proporcionará diferentes variables relacionadas con la conexión.
+
+Entre ellas pueden encontrarse:
 
 ```env
 MYSQLHOST=
@@ -395,51 +398,351 @@ MYSQLPORT=
 MYSQLDATABASE=
 MYSQLUSER=
 MYSQLPASSWORD=
+MYSQL_URL=
+MYSQL_PUBLIC_URL=
 ```
 
-Estas credenciales serán utilizadas posteriormente por la aplicación Node.js para conectarse a la base de datos.
+Estas variables contienen información necesaria para conectarse al servidor MySQL.
 
 ---
 
-## 5. Importar la Base de Datos
+# 5. ¿Por qué se debe obtener y usar `MYSQL_PUBLIC_URL`?
 
-### Método A: MySQL Workbench
+`MYSQL_PUBLIC_URL` es una cadena de conexión que permite acceder a la base de datos MySQL de Railway desde fuera del entorno de Railway.
 
-1. Crear una nueva conexión utilizando las credenciales proporcionadas por Railway.
-2. Conectarse al servidor MySQL.
-3. Abrir el archivo:
+Esto es especialmente importante para este proyecto porque **MySQL Workbench se ejecuta en el equipo local**, mientras que MySQL se encuentra alojado remotamente en Railway.
+
+La URL puede tener una estructura similar a:
 
 ```text
-database/control_escolar.sql
+mysql://USUARIO:CONTRASEÑA@HOST:PUERTO/BASE_DE_DATOS
 ```
 
-4. Ejecutar el script completo utilizando el botón Execute (⚡).
+Por ejemplo:
 
-Esto creará automáticamente todas las tablas y registros necesarios para el funcionamiento del sistema.
+```text
+mysql://root:MiPassword@monorail.proxy.rlwy.net:12345/railway
+```
+
+> El ejemplo anterior es únicamente ilustrativo. Los valores reales serán diferentes para cada proyecto de Railway.
 
 ---
 
-### Método B: Línea de Comandos
+# 6. ¿Cómo obtener `MYSQL_PUBLIC_URL`?
 
-Ejecutar:
+Para obtenerla:
+### Paso 1. Abrir el servicio MySQL
 
-```bash
-mysql -h HOST_RAILWAY -u USUARIO_RAILWAY -p DATABASE_RAILWAY < database/control_escolar.sql
+Dentro de tu proyecto en Railway, selecciona el servicio:
+
+```text
+MySQL
 ```
-
-Reemplazando los valores por los proporcionados por Railway.
 
 ---
 
-## 6. Verificar la Importación
+### Paso 2. Ir a la configuración de Networking
 
-Una vez importada la base de datos, ejecutar:
+En la parte superior selecciona:
+
+```text
+Settings → Networking
+```
+
+---
+
+### Paso 3. Habilitar el acceso público
+
+Dentro de la sección **Networking**, localiza la opción:
+
+```text
+Public Access
+```
+
+Activa el interruptor para habilitar el acceso público al servicio MySQL.
+
+> **¿Qué hace esta opción?**
+>
+> Al habilitar **Public Access**, Railway crea un **TCP Proxy** que permite acceder a la base de datos desde fuera de la infraestructura de Railway. Esto hace posible conectarse mediante herramientas externas como **MySQL Workbench**, DBeaver o cualquier cliente compatible con MySQL.
+
+---
+
+# Paso 7. Obtener `MYSQL_PUBLIC_URL`
+
+Una vez habilitado **Public Access**, Railway genera automáticamente una nueva variable de entorno llamada:
+
+```text
+MYSQL_PUBLIC_URL
+```
+
+Para verla:
+
+1. Regresa al servicio **MySQL**.
+2. Abre la pestaña:
+
+```text
+Variables
+```
+
+3. Busca la variable:
+
+```text
+MYSQL_PUBLIC_URL
+```
+
+---
+
+# Paso 8. ¿Qué es `MYSQL_PUBLIC_URL`?
+
+`MYSQL_PUBLIC_URL` es una **cadena de conexión completa** que contiene toda la información necesaria para conectarse a la base de datos MySQL desde fuera de Railway.
+
+Su formato general es:
+
+```text
+mysql://usuario:contraseña@host:puerto/base_de_datos
+```
+
+Ejemplo ilustrativo:
+
+```text
+mysql://root:MiPass123@containers-us-west-123.railway.app:6543/railway
+```
+
+> **Nota:** El ejemplo anterior es únicamente ilustrativo. Cada proyecto de Railway genera valores diferentes.
+
+---
+
+# Paso 9. Información contenida en `MYSQL_PUBLIC_URL`
+
+La cadena de conexión incluye los siguientes datos:
+
+| Elemento | Descripción |
+|----------|-------------|
+| `usuario` | Usuario de MySQL. |
+| `contraseña` | Contraseña del usuario. |
+| `host` | Dirección pública del servidor MySQL. |
+| `puerto` | Puerto público asignado por Railway. |
+| `base_de_datos` | Nombre de la base de datos creada en Railway. |
+
+Por ejemplo:
+
+```text
+mysql://root:MiPass123@containers-us-west-123.railway.app:6543/railway
+```
+
+corresponde a:
+
+| Campo | Valor |
+|-------|-------|
+| Usuario | `root` |
+| Contraseña | `MiPass123` |
+| Host | `containers-us-west-123.railway.app` |
+| Puerto | `6543` |
+| Base de datos | `railway` |
+
+---
+
+```
+
+5. Copiar el valor proporcionado por Railway.
+
+El valor será similar a:
+
+```text
+mysql://usuario:contraseña@host:puerto/base_de_datos
+```
+
+### Importante
+
+No publicar el valor real de:
+
+```text
+MYSQL_PUBLIC_URL
+```
+
+en GitHub.
+
+Esta información puede contener credenciales de acceso a la base de datos.
+
+---
+
+# 10. Diferencia entre `MYSQL_URL` y `MYSQL_PUBLIC_URL`
+
+Railway puede proporcionar diferentes cadenas de conexión.
+
+Por ejemplo:
+
+```text
+MYSQL_URL
+```
+
+y:
+
+```text
+MYSQL_PUBLIC_URL
+```
+
+No deben confundirse.
+
+Para una herramienta externa como **MySQL Workbench**, se debe utilizar la información de conexión pública proporcionada por Railway.
+
+La razón es que Workbench está instalado en el equipo local y necesita acceder al servidor MySQL a través de una conexión accesible desde Internet.
+
+En cambio, una conexión interna puede estar destinada a servicios que se encuentran dentro del entorno de Railway.
+
+---
+
+
+# 11. Crear una conexión de Railway en MySQL Workbench
+
+Abrir MySQL Workbench.
+
+En la pantalla principal seleccionar:
+
+```text
+MySQL Connections
+```
+
+y crear una nueva conexión.
+
+Seleccionar:
+
+```text
++
+```
+
+o:
+
+```text
+Add Connection
+```
+
+---
+
+# 12. Configurar la conexión
+
+Utilizar los valores obtenidos de `MYSQL_PUBLIC_URL`.
+
+Por ejemplo, si la URL es:
+
+```text
+mysql://root:MiPassword@monorail.proxy.rlwy.net:12345/railway
+```
+
+la configuración será:
+
+### Connection Name
+
+Este nombre es solamente para identificar la conexión.
+
+Por ejemplo:
+
+```text
+Railway - Control Escolar
+```
+
+### Hostname
+
+```text
+monorail.proxy.rlwy.net
+```
+
+### Port
+
+```text
+12345
+```
+
+### Username
+
+```text
+root
+```
+
+### Password
+
+La contraseña se ingresa después al dar clic en Test Connection:
+
+```text
+MiPassword
+```
+Despues aparecera una ventana y se debe dar clic en Continue Anyway
+
+# 13. ¿Por qué utilizar MySQL Workbench?
+
+MySQL Workbench permite administrar visualmente y relacionar tablas de la base de datos que está alojada en Railway.
+
+Por ejemplo:
+
+```text
+┌───────────────────────┐
+│    MySQL Workbench    │
+│       PC local        │
+└───────────┬───────────┘
+            │
+            │ conexión pública
+            ▼
+┌───────────────────────┐
+│       Railway         │
+│       MySQL           │
+└───────────────────────┘
+```
+
+La base de datos sigue estando en Railway.
+
+Workbench solamente se conecta a ella para administrarla.
+
+---
+
+
+# 14. Seleccionar la base de datos
+
+Para trabajar directamente con la base de datos:
+
+```sql
+USE NOMBRE_BASE_DATOS;
+```
+
+Railway te da una base de datos de nombre:
+
+```text
+railway
+```
+
+se debe ejecutar:
+
+```sql
+USE railway;
+```
+
+
+# 15. Ejecutar el archivo SQL
+
+Ejecutar las tablas del script una por una ordenadamente como esta en el script para evitar conflictos.
+Y después se ejecuta la informacion insertada 
+
+Por ejemplo:
+
+```text
+CREATE TABLE ...
+INSERT INTO ...
+```
+
+---
+
+# 16. Verificar que las tablas fueron creadas
+
+En MySQL Workbench ejecutar:
 
 ```sql
 SHOW TABLES;
 ```
 
-Deberán aparecer tablas similares a:
+También se puede actualizar el panel de esquemas para visualizar las tablas.
+
+Deben aparecer las tablas correspondientes al proyecto.
+
+Por ejemplo:
 
 ```text
 calumnos
@@ -451,7 +754,261 @@ chorarios
 ...
 ```
 
-Si las tablas aparecen correctamente, la importación fue exitosa.
+
+---
+
+# 17. Datos necesarios para conectar Render con Railway
+
+Una vez que la base de datos funciona correctamente, se necesitan los datos de conexión para que la aplicación Node.js pueda acceder a Railway.
+
+Los datos necesarios son:
+
+```env
+DB_HOST=HOST_RAILWAY
+DB_USER=USUARIO_RAILWAY
+DB_PASSWORD=PASSWORD_RAILWAY
+DB_NAME=DATABASE_RAILWAY
+DB_PORT=PUERTO_RAILWAY
+```
+
+Estos valores deben corresponder a la conexión pública de Railway cuando Render se encuentra fuera del entorno de Railway.
+
+---
+
+# 18. Relación entre `MYSQL_PUBLIC_URL` y las variables `DB_*`
+
+Por ejemplo, Railway podría proporcionar una URL ilustrativa:
+
+```text
+mysql://root:MiPassword@monorail.proxy.rlwy.net:12345/railway
+```
+
+De ella se obtiene:
+
+```env
+DB_HOST=monorail.proxy.rlwy.net
+DB_USER=root
+DB_PASSWORD=MiPassword
+DB_NAME=railway
+DB_PORT=12345
+```
+
+Estas variables serán configuradas posteriormente en Render.
+
+> Los valores anteriores son únicamente un ejemplo. Cada instancia de Railway tendrá sus propios valores.
+
+---
+
+# 19. Configurar las variables en Render
+
+Cuando se configure el Web Service en Render, entrar a:
+
+```text
+Environment
+```
+
+y agregar:
+
+```env
+DB_HOST=HOST_PUBLICO_RAILWAY
+DB_USER=USUARIO_RAILWAY
+DB_PASSWORD=PASSWORD_RAILWAY
+DB_NAME=DATABASE_RAILWAY
+DB_PORT=PUERTO_RAILWAY
+
+JWT_SECRET=TU_CLAVE_SECRETA
+CURP_TOKEN=TU_TOKEN_CURP
+```
+
+La aplicación utilizará estas variables para conectarse a MySQL.
+
+---
+
+# 20. Comprobar `database/db.js`
+
+Antes del despliegue, revisar que el archivo:
+
+```text
+database/db.js
+```
+
+utilice los mismos nombres de variables configurados en Render.
+
+Por ejemplo:
+
+```javascript
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
+});
+```
+
+La implementación exacta puede variar dependiendo del código del proyecto.
+
+Lo importante es que:
+
+```text
+Código
+   │
+   ├── process.env.DB_HOST
+   ├── process.env.DB_USER
+   ├── process.env.DB_PASSWORD
+   ├── process.env.DB_NAME
+   └── process.env.DB_PORT
+          │
+          ▼
+       Railway
+```
+
+Los nombres deben coincidir exactamente.
+
+---
+
+# 21. No utilizar `localhost` en Render
+
+Cuando la aplicación funciona localmente, es posible que `.env` tenga:
+
+```env
+DB_HOST=localhost
+```
+
+Esto funciona porque MySQL está instalado en el mismo equipo local.
+
+Pero en producción:
+
+```text
+Render
+```
+
+y:
+
+```text
+Railway
+```
+
+son servicios separados.
+
+Por lo tanto, **no utilizar**:
+
+```env
+DB_HOST=localhost
+```
+
+en Render.
+
+Tampoco utilizar:
+
+```env
+DB_HOST=127.0.0.1
+```
+
+porque esos valores apuntarían al propio entorno de Render y no al servidor MySQL de Railway.
+
+---
+
+# 22. Seguridad de `MYSQL_PUBLIC_URL`
+
+`MYSQL_PUBLIC_URL` debe tratarse como información sensible.
+
+No publicar su valor real en:
+
+* GitHub.
+* README.
+* `.env.example`.
+* Capturas de pantalla públicas.
+* Documentación pública.
+* Mensajes o foros.
+
+---
+
+# 35. Flujo completo de Railway
+
+Para una nueva instalación del proyecto, el procedimiento completo es:
+
+```text
+1. Crear cuenta en Railway
+        ↓
+2. Crear New Project
+        ↓
+3. Add Service
+        ↓
+4. Database
+        ↓
+5. MySQL
+        ↓
+6. Esperar a que MySQL esté activo
+        ↓
+7. Abrir MySQL
+        ↓
+8. Entrar a Variables
+        ↓
+9. Obtener MYSQL_PUBLIC_URL
+        ↓
+10. Identificar:
+      ├── Host
+      ├── Port
+      ├── User
+      ├── Password
+      └── Database
+        ↓
+11. Abrir MySQL Workbench
+        ↓
+12. Crear nueva conexión
+        ↓
+13. Introducir Host + Port + User + Password
+        ↓
+14. Test Connection
+        ↓
+15. Abrir archivo SQL del proyecto
+        ↓
+16. Ejecutar SQL
+        ↓
+17. SHOW TABLES
+        ↓
+18. Comprobar datos
+        ↓
+19. Comprobar claves y relaciones
+        ↓
+20. Utilizar los datos de conexión
+    para configurar Render
+```
+
+---
+
+# 36. Verificación final de Railway
+
+Antes de continuar con el despliegue de Render, comprobar:
+
+```text
+[✓] Cuenta de Railway creada
+[✓] Proyecto Railway creado
+[✓] Servicio MySQL creado
+[✓] MySQL está funcionando
+[✓] MYSQL_PUBLIC_URL obtenida
+[✓] Host identificado
+[✓] Puerto identificado
+[✓] Usuario identificado
+[✓] Contraseña identificada
+[✓] Base de datos identificada
+[✓] MySQL Workbench instalado
+[✓] Conexión de Workbench creada
+[✓] Test Connection exitoso
+[✓] Archivo SQL importado
+[✓] Tablas creadas
+[✓] Registros verificados
+[✓] Claves primarias verificadas
+[✓] Claves foráneas verificadas
+[✓] Relaciones verificadas
+[✓] Datos preparados para configurar Render
+```
+
+Una vez completados estos pasos, la base de datos de Railway estará preparada para recibir conexiones desde la aplicación Node.js desplegada en Render.
+
 
 ---
 
@@ -480,8 +1037,10 @@ Web Service
 ```
 
 3. Conectar la cuenta de GitHub.
-4. Seleccionar el repositorio del proyecto.
+4. Autorizar a Render para acceder al repositorio.
+5. Seleccionar el repositorio del proyecto.
 
+Render utilizará este repositorio como fuente de código para realizar el despliegue.
 ---
 
 ## 3. Configuración del Servicio
@@ -538,12 +1097,11 @@ CURP_TOKEN=TU_TOKEN_CURP
 
 | Variable | Descripción |
 |-----------|-------------|
-| PORT | Puerto utilizado por la aplicación |
-| DB_HOST | Host de la base de datos MySQL |
-| DB_USER | Usuario de MySQL |
-| DB_PASSWORD | Contraseña de MySQL |
-| DB_NAME | Nombre de la base de datos |
-| DB_PORT | Puerto utilizado por MySQL |
+| DB_HOST | Host de la base de datos Railway |
+| DB_USER | Usuario de Railway |
+| DB_PASSWORD | Contraseña de Railway |
+| DB_NAME | Nombre de la base de datos de Railway|
+| DB_PORT | Puerto utilizado por Railway |
 | JWT_SECRET | Clave utilizada para generar y verificar JWT |
 | CURP_TOKEN | Token utilizado para consumir la API de validación de CURP |
 
