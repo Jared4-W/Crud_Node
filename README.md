@@ -135,7 +135,7 @@ Crear un archivo llamado:
 en la raíz del proyecto.
 
 Ejemplo:
-
+Nota: curp_token si debe ir como esta
 ```env
 PORT=5000
 
@@ -143,7 +143,7 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=tu_password
 DB_NAME=control_escolar
-
+CURP_TOKEN=pruebas
 JWT_SECRET=clave_super_secreta_para_jwt
 ```
 
@@ -285,7 +285,7 @@ Proyecto
 ## Variables de entorno
 
 Configurar en Render las siguientes variables:
-
+Nota: curp_token si debe ir como esta
 ```env
 DB_HOST=
 DB_USER=
@@ -293,6 +293,7 @@ DB_PASSWORD=
 DB_NAME=
 JWT_SECRET=
 PORT=
+CURP_TOKEN=pruebas
 ```
 
 ## Inicio del servicio
