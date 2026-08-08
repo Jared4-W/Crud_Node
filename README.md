@@ -135,7 +135,8 @@ Crear un archivo llamado:
 en la raíz del proyecto.
 
 Ejemplo:
-Nota: curp_token si debe ir como esta
+
+Nota: curp_token si debe ir como esta o conseguir uno propio en: https://api.valida-curp.com.mx/
 ```env
 PORT=5000
 
@@ -285,7 +286,8 @@ Proyecto
 ## Variables de entorno
 
 Configurar en Render las siguientes variables:
-Nota: curp_token si debe ir como esta
+
+Nota: curp_token si debe ir como esta o conseguir uno propio en: https://api.valida-curp.com.mx/
 ```env
 DB_HOST=
 DB_USER=
